@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title%}
+Home
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Hello, world!</h1>
+            <p class="lead">
+                Taskmaster is an essential todo app that enables you to get ahead of your tasks
+            </p>
+            <hr class="my-4">
+            <p>
+                Made by Pratik Anand (2k17/CO/235) and Priyansh Verma (2k17/CO/246)
+            </p>
+            <a class="btn btn-primary btn-lg" href="{% url 'login_view' %}" role="button">Login</a>
+            <a class="btn btn-dark btn-lg" href="{% url 'register_view' %}" role="button">Register</a>
+        </div>
+        </div>
+{% endblock %}
+
+{% block top %}
+
+{% endblock %}

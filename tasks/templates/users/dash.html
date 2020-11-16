@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title%}
+Dash
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron jumbotron-fluid h-100">
+        <div class="container">
+            <h1 class="display-4">Dashboard</h1>
+            <p class="lead">
+                
+            </p>
+            <hr class="my-4">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Add task">
+            </form>
+            <hr class="my-6">
+            <div class="d-flex w-100 justify-content-between">
+                <h2>Your Tasks</h2>
+                <ul class="nav nav-pills">
+                    Show: &nbsp;
+                    <li class="active">
+                        <a data-toggle="pill" href="#all-tasks">All</a>&nbsp;|&nbsp;
+                    </li>
+                    <li>
+                        <a data-toggle="pill" href="#remaining-tasks">Remaining</a>&nbsp;|&nbsp;
+                    </li>
+                    <li>
+                        <a data-toggle="pill" href="#completed-tasks">Completed</a>
+                    </li>
+                    
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane list-group active" id="all-tasks">
+                    {% if tasks|length == 0 %}
+                    <span class="d-flex justify-content-center">
+                        <h4 class="text-muted">No tasks</h4>
+                    </span>
+                    {% endif %}
+                    {% for task in tasks %}
+                    <div class="list-group-item list-group-item-action bg-light">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">
+                                {% if task.complete %}
+                                    <em><strike>{{ task.title }}</strike></em>
+                                {% else %}
+                                    <strong>{{ task.title }}</strong>
+                                {% endif %}
+                            </h5>
+                            <small class="text-muted">Deadline: {{ task.deadline | date:"D f A, d M Y"}}</small>
+                        </div>
+                        <span class="d-flex w-75">
+                            {{ task.description }}
+                        </span>
+                        <br>
+                        <div class="d-flex w-100 justify-content-between">
+                            <div>
+                                <small class="text-muted">Created: {{ task.created | date:"D f A, d M Y" }}</small>
+                            </div>
+                            <div>
+                                <a href="{% url 'view_task' task.id %}">View</a>
+                                <a href="{% url 'edit_task' task.id %}">Edit</a>
+                                <a href="{% url 'delete_task' task.id %}">Delete</a>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="tab-pane list-group fade" id="remaining-tasks">
+                    {% if remaining_tasks|length == 0 %}
+                    <span class="d-flex justify-content-center">
+                        <h4 class="text-muted">No remaining tasks</h4>
+                    </span>
+                    {% endif %}
+                    {% for task in remaining_tasks %}
+                    <div class="list-group-item list-group-item-action bg-light">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">
+                                {% if task.complete %}
+                                    <em><strike>{{ task.title }}</strike></em>
+                                {% else %}
+                                    <strong>{{ task.title }}</strong>
+                                {% endif %}
+                            </h5>
+                            <small class="text-muted">Deadline: {{ task.deadline | date:"D f A, d M Y"}}</small>
+                        </div>
+                        {{ task.description }}
+                        <br>
+                        <div class="d-flex w-100 justify-content-between">
+                            <div>
+                                <small class="text-muted">Created: {{ task.created | date:"D f A, d M Y" }}</small>
+                            </div>
+                            <div>
+                                <a href="{% url 'view_task' task.id %}">View</a>
+                                <a href="{% url 'edit_task' task.id %}">Edit</a>
+                                <a href="{% url 'delete_task' task.id %}">Delete</a>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="tab-pane list-group fade" id="completed-tasks">
+                    {% if completed_tasks|length == 0 %}
+                    <span class="d-flex justify-content-center">
+                        <h4 class="text-muted">No completed tasks</h4>
+                    </span>
+                    {% endif %}
+                    {% for task in completed_tasks %}
+                    <div class="list-group-item list-group-item-action bg-light">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">
+                                {% if task.complete %}
+                                    <em><strike>{{ task.title }}</strike></em>
+                                {% else %}
+                                    <strong>{{ task.title }}</strong>
+                                {% endif %}
+                            </h5>
+                            <small class="text-muted">Deadline: {{ task.deadline | date:"D f A, d M Y"}}</small>
+                        </div>
+                        {{ task.description }}
+                        <br>
+                        <div class="d-flex w-100 justify-content-between">
+                            <div>
+                                <small class="text-muted">Created: {{ task.created | date:"D f A, d M Y" }}</small>
+                            </div>
+                            <div>
+                                <a href="{% url 'view_task' task.id %}">View</a>
+                                <a href="{% url 'edit_task' task.id %}">Edit</a>
+                                <a href="{% url 'delete_task' task.id %}">Delete</a>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title%}
+View task
+{% endblock %}
+
+{% block content %}
+
+    <h3>Viewing {{ task.title }}</h3>
+    <p>{{ task.description }}</p>
+    <p>Created: {{ task.created }}</p>
+    <p>Deadline: {{ task.deadline }}</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Change complete status">
+    </form>
+    <a href="{% url 'dash' %}">Back to dashboard</a>
+{% endblock %}
