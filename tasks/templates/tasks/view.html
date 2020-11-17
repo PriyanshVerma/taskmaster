@@ -5,15 +5,48 @@ View task
 {% endblock %}
 
 {% block content %}
-
-    <h3>Viewing {{ task.title }}</h3>
-    <p>{{ task.description }}</p>
-    <p>Created: {{ task.created }}</p>
-    <p>Deadline: {{ task.deadline }}</p>
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Change complete status">
-    </form>
-    <a href="{% url 'dash' %}">Back to dashboard</a>
+<div class="jumbotron jumbotron-fluid h-100">
+    <div class="container">
+        <div class="tab-content">
+            <div class="tab-pane list-group active" id="all-tasks">
+                <div class="d-flex w-100 justify-content-between">
+                    <h3 class="mb-1">{{ task.title }}</h3>
+                    <small><i class="fas fa-hourglass-half"></i><strong>    {{ task.deadline | date:"D f A, d M Y"}}</strong></small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                    <p>{{ task.description }}</p>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                    <div>
+                        <small class="text-muted">Created: {{ task.created | date:"D f A, d M Y" }}</small>
+                    </div>
+                </div>
+                <br>
+                <div class="d-flex w-100 justify-content-between">
+                    <form method="post">
+                        {% csrf_token %}
+                        <!-- <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text "> <small>Done?</small></span>
+                            </div> -->
+                            <!-- <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"> -->
+                            <div>
+                                <span>{{ form.complete }} </span>
+                                <span>Mark as done</span>
+                            </div>
+                        <!-- </div> -->
+                        <!-- {{ form.complete }} -->
+                        <!-- <div> -->
+                            <div>
+                                <input type="submit" value="Update" class="btn btn-info btn-sm" style="padding-left:30%; padding-right:30%;">
+                            </div>
+                        <!-- </div> -->
+                        
+                    </form>
+                    <a href="{% url 'dash' %}">Back to dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

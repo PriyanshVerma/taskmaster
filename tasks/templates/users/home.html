@@ -5,7 +5,7 @@ Home
 {% endblock %}
 
 {% block content %}
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid h-100">
         <div class="container">
             <h1 class="display-4">Hello, world!</h1>
             <p class="lead">
@@ -13,10 +13,12 @@ Home
             </p>
             <hr class="my-4">
             <p>
-                Login or register to continue
+                Please login or register to continue. It hardly takes a minute <i class="far fa-smile-beam"></i>
             </p>
-            <a class="btn btn-primary btn-lg" href="{% url 'login_view' %}" role="button">Login</a>
-            <a class="btn btn-dark btn-lg" href="{% url 'register_view' %}" role="button">Register</a>
+            <div class="btn-group" role="group">
+                <a href="{% url 'login_view' %}" class="btn btn-lg btn-secondary">Login</a>
+                <a href="{% url 'register_view' %}" class="btn btn-lg btn-info">Register</a>
+            </div>
         </div>
         </div>
 {% endblock %}

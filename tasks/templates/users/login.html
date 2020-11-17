@@ -8,9 +8,12 @@ Login
     <div class="jumbotron jumbotron-fluid h-100">
         <div class="container">
             <h1 class="display-4">Login</h1>
-            <p class="lead">
-                Login to create, read, update, and delete your tasks
-            </p>
+            <div class="lead">
+                Login to create tasks and read more about what's due, or maybe update them if something has changed?
+            </div>
+            <div class="lead">
+                And, don't forget to delete them if they're done!
+            </div> 
             <hr class="my-4">
             <div class="d-flex flex-column">
                 <form action="" method="post">
@@ -19,7 +22,7 @@ Login
                         {{ error }}
                     {% endif %}
                     {{ form.as_p }}
-                    <input type="submit" class="btn btn-primary btn-lg" value="Login">
+                    <input type="submit" class="btn btn-info btn-lg" value="Login">
                     
                 </form>
             </div>

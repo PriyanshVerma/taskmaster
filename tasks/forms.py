@@ -9,7 +9,8 @@ class TaskForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'owner': forms.HiddenInput(),
-            'description': forms.Textarea(attrs={'cols': 28, 'rows': 10})
+            'title': forms.Textarea(attrs={'cols': 50, 'rows': 1}),
+            'description': forms.Textarea(attrs={'cols': 50, 'rows': 6})
         }
 
 class TaskDoneForm(forms.ModelForm):
