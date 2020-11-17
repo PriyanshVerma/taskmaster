@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from .forms import *
 
 def home(request):
@@ -72,7 +74,10 @@ def dash(request):
 
 
 def view_task(request, pk):
-    task = Task.objects.get(id=pk)
+    try:
+        task = Task.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return render(request, 'users/unexist.html')
     if task.owner != request.user:
         return render(request, 'users/unauth.html')
     form = TaskDoneForm(instance=task)
@@ -86,7 +91,11 @@ def view_task(request, pk):
 
 
 def edit_task(request, pk):
-    task = Task.objects.get(id=pk)
+    try:
+        task = Task.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return render(request, 'users/unexist.html')
+        
     if task.owner != request.user:
         return render(request, 'users/unauth.html')
     form = TaskForm(instance=task)
@@ -102,7 +111,10 @@ def edit_task(request, pk):
 
 
 def delete_task(request, pk):
-    task = Task.objects.get(id=pk)
+    try:
+        task = Task.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return render(request, 'users/unexist.html')
     if task.owner != request.user:
         return render(request, 'users/unauth.html')
     
