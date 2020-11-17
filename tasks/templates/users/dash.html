@@ -5,18 +5,40 @@ Dash
 {% endblock %}
 
 {% block content %}
-    <div class="jumbotron jumbotron-fluid h-100">
+    <div class="jumbotron jumbotron-fluid h-200" style="border-bottom: 4em;">
         <div class="container">
-            <h1 class="display-4">Dashboard</h1>
-            <p class="lead">
-                
-            </p>
-            <hr class="my-4">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Add task">
-            </form>
+            <div class="container" style="padding-left: 30%; padding-bottom: 4em;">
+                    
+                <h3 class="display-3">
+                    <small class="text-muted">Dash</small>.board
+                </h3>
+                <div class="d-flex w-100 justify-content-between">
+                    <form method="post">
+                        <!-- {% csrf_token %} -->
+                        <!-- {{ form.as_p }} -->
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>What are you <em><strong>Task</strong></em>ed with?</label>
+                            <br>
+                            {{form.title}}
+                        </div>
+                        <div class="form-group">
+                            <label>Okay, what <strong>about</strong> it?</label>
+                            <br>
+                            {{form.description}}
+                        </div>
+                        <div class="form-group">
+                            <label>Ah, okay. But, its <strong>deadline</strong>?</label>
+                            {{form.deadline}}
+                        </div>
+                        {{form.owner}}
+                        <input type="submit" value="Add task" class="btn btn-info" style="padding-left: 42%; padding-right: 42%;">
+                    
+                    </form>
+                </div>
+
+            </div>
+
             <hr class="my-6">
             <div class="d-flex w-100 justify-content-between">
                 <h2>Your Tasks</h2>
@@ -54,7 +76,7 @@ Dash
                             <small class="text-muted">Deadline: {{ task.deadline | date:"D f A, d M Y"}}</small>
                         </div>
                         <span class="d-flex w-75">
-                            {{ task.description }}
+                            {{ task.description| truncatewords:10 }}
                         </span>
                         <br>
                         <div class="d-flex w-100 justify-content-between">

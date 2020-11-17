@@ -10,20 +10,24 @@ Not authorized
             <h1 class="display-4">Not Authorized</h1>
             <p class="lead">
                 {% if user.is_authenticated %}
-                    Accessing page as an unauthorized user
+                    Unfortunately, you don't have the requisite security clearance to view this page!
                 {% else %}
-                    Login or register to use Taskmaster
+                    Please login or register to use Taskmaster.
                 {% endif %}
             </p>
             <hr class="my-4">
             {% if user.is_authenticated %}
-                Logout and login as correct user to access
-                <a href="{% url 'logout_view' %}">Logout</a>
+                Please re-login with appropriate user credentials to access this page :)
+                <br>
+                <a href="{% url 'logout_view' %}" class="btn btn-sm btn-secondary">Logout</a>
             {% else %}
-                You can create a user account or use an existing one
-                <a href="{% url 'login_view' %}">Login</a>
-                <a href="{% url 'register_view' %}">Register</a>
-            {% endif %}
+                You can login using an existing account or register and create a new one to use Taskmaster.
+                <br>
+                <div class="btn-group" role="group">
+                    <a href="{% url 'login_view' %}" class="btn btn-sm btn-secondary">Login</a>
+                    <a href="{% url 'register_view' %}" class="btn btn-sm btn-primary">Register</a>
+                </div>
+                {% endif %}
         </div>
     </div>
 {% endblock %}

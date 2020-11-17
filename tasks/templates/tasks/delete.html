@@ -5,14 +5,23 @@ Delete task
 {% endblock %}
 
 {% block content %}
-    <h3>Delete {{ task.title }}?</h3>
 
-    <form method="post">
-        {% csrf_token %}
-        <p>Sure you want to delete {{ task.title }}?</p>
-        <a href="{% url 'dash' %}">Cancel</a>
-        <input type="submit" value="Delete">
-    </form>
+<div class="h-100 row align-items-center" >
+    <div style="width: fit-content; padding-left: 40%;">
+        <div class="container">
+            <form method="post">
+                <div class="alert alert-danger" role="alert">
+                    <h3>Delete task</h3>
+                    <p>Sure you want to delete task: <strong>{{ task.title }}</strong>?</p>
+                    <a href="{% url 'dash' %}"class="btn btn-block btn-secondary">Cancel</a>
+                    {% csrf_token %}
+                    <hr>
+                    <input type="submit" value="Delete" class="btn btn-block btn-danger">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <a href="{% url 'dash' %}">Back to dashboard</a>
 {% endblock %}
