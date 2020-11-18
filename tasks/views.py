@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 
+from django.utils import timezone
+
 from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import *
@@ -64,7 +66,8 @@ def dash(request):
         tasks = Task.objects.filter(owner=request.user)
         remaining_tasks = tasks.filter(complete=False)
         completed_tasks = tasks.filter(complete=True)
-        context = {'form': form, 'tasks': tasks, 'remaining_tasks': remaining_tasks, 'completed_tasks': completed_tasks}
+        overdue_tasks = remaining_tasks.filter(deadline__lte=timezone.now())
+        context = {'form': form, 'tasks': tasks, 'remaining_tasks': remaining_tasks, 'completed_tasks': completed_tasks, 'overdue_tasks': overdue_tasks}
         return render(request, 'users/dash.html', context)
     elif request.method == 'POST':
         form = TaskForm(request.POST)
