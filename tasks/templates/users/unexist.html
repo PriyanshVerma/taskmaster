@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title%}
+Not authorized
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron jumbotron-fluid h-100">
+        <div class="container">
+            <h1 class="display-4">Not Found</h1>
+            <p class="lead">
+                Unfortunately, this resource was not found on the server.
+            </p>
+            <hr class="my-4">
+            {% if user.is_authenticated %}
+                Please go back to the dashboard and explore all your available tasks or create more.
+                <br>
+                <a href="{% url 'dash' %}" class="btn btn-sm btn-secondary">Dashboard</a>
+            {% else %}
+                You can login using an existing account or register and create a new one to use Taskmaster.
+                <br>
+                <div class="btn-group" role="group">
+                    <a href="{% url 'login_view' %}" class="btn btn-sm btn-secondary">Login</a>
+                    <a href="{% url 'register_view' %}" class="btn btn-sm btn-primary">Register</a>
+                </div>
+                {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -5,6 +5,7 @@ Edit task
 {% endblock %}
 
 {% block content %}
+<div class="jumbotron jumbotron-fluid h-100">
     <!-- <h3>Update {{ task.title }}</h3> -->
     <div class="container"  style="padding-top: 2em; padding-left: 20%;">
         <!-- <div class="justify-content-center align-items-center"> -->
@@ -37,7 +38,7 @@ Edit task
                         {{form.deadline}}
                     </div>
                     {{form.owner}}
-                    <input type="submit" value="Update Task" class="btn btn-info" style="padding-right: 43%; padding-left: 43%;">
+                    <input type="submit" value="Update Task" class="btn btn-info w-100">
                     
                 </form>
                 <hr>
@@ -47,6 +48,8 @@ Edit task
             </div>
         </div>
     </div>
+</div>
+
 
 
 {% endblock %}

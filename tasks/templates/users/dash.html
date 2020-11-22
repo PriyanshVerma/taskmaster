@@ -32,7 +32,7 @@ Dash
                             {{form.deadline}}
                         </div>
                         {{form.owner}}
-                        <input type="submit" value="Add task" class="btn btn-info" style="padding-left: 42%; padding-right: 42%;">
+                        <input type="submit" value="Add task" class="btn btn-info w-100">
                     
                     </form>
                 </div>
@@ -49,6 +49,9 @@ Dash
                     </li>
                     <li>
                         <a data-toggle="pill" href="#remaining-tasks">Remaining</a>&nbsp;|&nbsp;
+                    </li>
+                    <li>
+                        <a data-toggle="pill" href="#overdue-tasks">Overdue</a>&nbsp;|&nbsp;
                     </li>
                     <li>
                         <a data-toggle="pill" href="#completed-tasks">Completed</a>
@@ -76,7 +79,7 @@ Dash
                             <small class="text-muted">Deadline: {{ task.deadline | date:"D f A, d M Y"}}</small>
                         </div>
                         <span class="d-flex w-75">
-                            {{ task.description| truncatewords:10 }}
+                            {{ task.description | truncatechars:150 }}
                         </span>
                         <br>
                         <div class="d-flex w-100 justify-content-between">
@@ -113,7 +116,47 @@ Dash
                             </h5>
                             <small class="text-muted">Deadline: {{ task.deadline | date:"D f A, d M Y"}}</small>
                         </div>
-                        {{ task.description }}
+                        <span class="d-flex w-75">
+                            {{ task.description | truncatechars:150 }}
+                        </span>
+                        <br>
+                        <div class="d-flex w-100 justify-content-between">
+                            <div>
+                                <small class="text-muted">Created: {{ task.created | date:"D f A, d M Y" }}</small>
+                            </div>
+                            <div>
+                                <a href="{% url 'view_task' task.id %}">View</a>
+                                <a href="{% url 'edit_task' task.id %}">Edit</a>
+                                <a href="{% url 'delete_task' task.id %}">Delete</a>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="tab-pane list-group fade" id="overdue-tasks">
+                    {% if overdue_tasks|length == 0 %}
+                    <span class="d-flex justify-content-center">
+                        <h4 class="text-muted">No overdue tasks</h4>
+                    </span>
+                    {% endif %}
+                    {% for task in overdue_tasks %}
+                    <div class="list-group-item list-group-item-action bg-light">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">
+                                {% if task.complete %}
+                                    <em><strike>{{ task.title }}</strike></em>
+                                {% else %}
+                                    <strong>{{ task.title }}</strong>
+                                {% endif %}
+                            </h5>
+                            <small class="text-muted">Deadline: {{ task.deadline | date:"D f A, d M Y"}}</small>
+                        </div>
+                        <span class="d-flex w-75">
+                            {{ task.description | truncatechars:150 }}
+                        </span>
                         <br>
                         <div class="d-flex w-100 justify-content-between">
                             <div>
@@ -149,7 +192,9 @@ Dash
                             </h5>
                             <small class="text-muted">Deadline: {{ task.deadline | date:"D f A, d M Y"}}</small>
                         </div>
-                        {{ task.description }}
+                        <span class="d-flex w-75">
+                            {{ task.description | truncatechars:150 }}
+                        </span>
                         <br>
                         <div class="d-flex w-100 justify-content-between">
                             <div>

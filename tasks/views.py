@@ -5,6 +5,10 @@ from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 
+from django.utils import timezone
+
+from django.core.exceptions import ObjectDoesNotExist
+
 from .forms import *
 
 def home(request):
@@ -62,7 +66,8 @@ def dash(request):
         tasks = Task.objects.filter(owner=request.user)
         remaining_tasks = tasks.filter(complete=False)
         completed_tasks = tasks.filter(complete=True)
-        context = {'form': form, 'tasks': tasks, 'remaining_tasks': remaining_tasks, 'completed_tasks': completed_tasks}
+        overdue_tasks = remaining_tasks.filter(deadline__lte=timezone.now())
+        context = {'form': form, 'tasks': tasks, 'remaining_tasks': remaining_tasks, 'completed_tasks': completed_tasks, 'overdue_tasks': overdue_tasks}
         return render(request, 'users/dash.html', context)
     elif request.method == 'POST':
         form = TaskForm(request.POST)
@@ -72,7 +77,10 @@ def dash(request):
 
 
 def view_task(request, pk):
-    task = Task.objects.get(id=pk)
+    try:
+        task = Task.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return render(request, 'users/unexist.html')
     if task.owner != request.user:
         return render(request, 'users/unauth.html')
     form = TaskDoneForm(instance=task)
@@ -86,7 +94,11 @@ def view_task(request, pk):
 
 
 def edit_task(request, pk):
-    task = Task.objects.get(id=pk)
+    try:
+        task = Task.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return render(request, 'users/unexist.html')
+        
     if task.owner != request.user:
         return render(request, 'users/unauth.html')
     form = TaskForm(instance=task)
@@ -102,7 +114,10 @@ def edit_task(request, pk):
 
 
 def delete_task(request, pk):
-    task = Task.objects.get(id=pk)
+    try:
+        task = Task.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return render(request, 'users/unexist.html')
     if task.owner != request.user:
         return render(request, 'users/unauth.html')
     
